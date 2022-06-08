@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">New Project</h1>
+            <form action="/projects" method="POST" novalidate class="validated-issue">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="project[title]" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid title.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="project[description]"
+                        required></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a valid description.
+                    </div>
+                </div>
+
+                <div class=" mb-3">
+                    <label class="form-label" for="assigned_to">Assigned To</label>
+                    <input class="form-control" type="text" id="assigned_to" name="tempUsername" required>
+                    <div class="invalid-feedback">
+                        Please provide a username.
+                    </div>
+                </div>
+
+                <!-- have ISSUE link to this -->
+
+                <button class="btn btn-blue mt-3">Add Project</button>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,89 @@
+<% layout('layouts/template')%>
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617388793/IssueTracker/register_page_ka7nmm.svg"
+                        alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h3>Register</h3>
+                                <p class="mb-4">Already Have An Account? <a href="/login">Log In</a></p>
+                            </div>
+                            <form action="/register" method="POST" class="validated-issue mt-4" novalidate>
+                                <div class="form-group first">
+                                    <label class="form-label" for="username">Username</label>
+                                    <input class="form-control" type="text" id="username" name="username" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid username.
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input class="form-control" type="email" id="email" name="email" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email.
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <label class="form-label" for="password">Password</label>
+                                    <input class="form-control" type="password" id="password" name="password" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid password.
+                                    </div>
+                                </div>
+
+                                <label class="form-label mt-2"> Select User Role</label>
+                                <div class="section over-hide z-bigger">
+                                    <div class="section over-hide z-bigger">
+                                        <div class="container pb-2">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 ">
+                                                    <input class="checkbox-tools" type="radio" name="role" id="tool-1"
+                                                        value="Admin" checked>
+                                                    <label class="for-checkbox-tools" for="tool-1">
+                                                        <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617361917/IssueTracker/admin_idiopt.svg"
+                                                            alt="" class="roleImg">
+
+                                                        <div class="mt-2 overrideBlack">Admin</div>
+                                                    </label>
+                                                    <input class="checkbox-tools" type="radio" name="role" id="tool-2"
+                                                        value="Project Manager">
+                                                    <label class="for-checkbox-tools" for="tool-2">
+                                                        <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617361917/IssueTracker/project_manager_napo9k.svg"
+                                                            alt="" class="roleImg">
+                                                        <div class="overrideBlack">Project Manager</div>
+                                                    </label>
+                                                    <input class="checkbox-tools" type="radio" name="role" id="tool-3"
+                                                        value="Developer">
+                                                    <label class="for-checkbox-tools" for="tool-3">
+                                                        <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617361919/IssueTracker/submitter_wh4ydl.svg"
+                                                            alt="" class="roleImg">
+                                                        <div class="mt-2 overrideBlack">Developer</div>
+                                                    </label>
+                                                    <input class="checkbox-tools" type="radio" name="role" id="tool-4"
+                                                        value="Submitter">
+                                                    <label class="for-checkbox-tools" for="tool-4">
+                                                        <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617361917/IssueTracker/submitter2_mmg7ot.svg"
+                                                            alt="" class="roleImg">
+                                                        <div class="mt-2 overrideBlack">
+                                                            Submitter
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-reg overrideBlack">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

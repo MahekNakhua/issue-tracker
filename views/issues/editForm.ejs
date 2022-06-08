@@ -1,0 +1,90 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">Update Issue</h1>
+            <form action="/issues/<%=issue._id%>?_method=PUT" method="POST" novalidate class="validated-issue"
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="issue[title]" value="<%=issue.title%>"
+                        required>
+                    <div class="invalid-feedback">
+                        Please provide a valid title.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="issue[description]"
+                        required><%=issue.description%></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a valid description.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="priority">Priority</label>
+                    <select class="form-control" id="priority" name="issue[priority]" required>
+                        <option value="High" <% if(issue.priority=='High' ) {%> selected <% } %> >High</option>
+                        <option value="Medium" <% if(issue.priority=='Medium' ) {%> selected <% } %> >Medium</option>
+                        <option value="Low" <% if(issue.priority=='Low' ) {%> selected <% } %> >Low</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="status">Status</label>
+                    <select class="form-control" id="status" name="issue[status]" required>
+                        <option value="Unassigned" <% if(issue.status=='Unassigned' ) {%> selected <% } %> >Unassigned
+                        </option>
+                        <option value="Assigned" <% if(issue.status=='Assigned' ) {%> selected <% } %> >Assigned
+                        </option>
+                        <option value="Resolved" <% if(issue.status=='Resolved' ) {%> selected <% } %> >Resolved
+                        </option>
+                    </select>
+                </div>
+                <div class=" mb-3">
+                    <label class="form-label" for="assigned_to">Assigned To</label>
+                    <% if(issue.assigned_to && issue.assigned_to.username.length) { %>
+                        <input class="form-control" type="text" id="assigned_to" name="tempUsername"
+                            value="<%=issue.assigned_to.username%>">
+                        <% } else { %>
+                            <input class="form-control" type="text" id="assigned_to" name="tempUsername">
+                            <% } %>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-file custom-file mt-3">
+                        <input type="file" class="form-file-input" id="imgMultiple" name="imgs" multiple>
+                        <label class="form-file-label" for="imgMultiple">
+                            <span class="form-file-text custom-file-label">Add more image(s)</span>
+                            <!-- <span class="form-file-button">Browse</span> -->
+                        </label>
+                    </div>
+                </div>
+
+                <!-- if status is assigned then fill this column -->
+                <!-- not asked during input, job of admin to assign these values -->
+                <!-- inclue modified date and modified by here -->
+                <% if(issue.images.length){ %> 
+                    <div class="mb-3">
+                        <label class="form-label" for="">Delete Images</label>
+                        <div class="row row-cols-2 row-cols-md-4 g-4 mb-3">
+                            <% issue.images.forEach((img, i)=> { %>
+                                <div class="col-4">
+                                    <div class="card cardIssue cardDeleteImg">
+                                        <img class="card-img" src="<%=img.thumbnail%>" alt="">
+                                        <div class="card-img-overlay text-end pt-1 pe-2">
+                                            <label class="sr-only" for="image-<%=i%>">Delete Image</label>
+                                            <input class="form-check-input deleteCheckbox" type="checkbox"
+                                                name="deleteImages[]" value="<%=img.filename%>" id="image-<%=i%>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                        </div>
+                    </div>
+                <% } %> 
+
+                <button class="btn btn-blue">Update Issue</button>
+            </form>
+        </div>
+    </div>
+    <a href="/issues/<%=issue._id%>">Back To Issue</a>

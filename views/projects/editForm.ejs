@@ -1,0 +1,34 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">Update Project</h1>
+            <form action="/projects/<%=project._id%>?_method=PUT" method="POST" novalidate class="validated-issue">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="project[title]" value="<%=project.title%>"
+                        required>
+                    <div class="invalid-feedback">
+                        Please provide a valid title.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="project[description]"
+                        required><%=project.description%></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a valid description.
+                    </div>
+                </div>
+
+                <% if (currentUser.role==='Admin'){ %> 
+                <div class=" mb-3">
+                    <label class="form-label" for="assigned_to">Assigned To</label>
+                    <input class="form-control" type="text" id="assigned_to" name="tempUsername"
+                            value="<%=project.assigned_to.username%>">
+                </div>
+                <% } %> 
+                <button class="btn btn-blue">Update Project</button>
+            </form>
+        </div>
+    </div>
+    <a href="/projects/<%=project._id%>">Back To Project</a>

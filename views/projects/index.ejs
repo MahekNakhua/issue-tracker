@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="row">
+                <% for(let project of projects) {%>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card cardIssue">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= project.title %>
+                                </h5>
+                                <p class="card-text shorten">
+                                    <%= project.description %>
+                                </p>
+                                <a href="projects/<%=project._id%>" class="btn btn-sm btn-readMore">Read
+                                    More</a>
+                                <!-- <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- add more stuff -->

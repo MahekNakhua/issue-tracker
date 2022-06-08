@@ -1,0 +1,277 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <div class="row mt-5 mb-5" style="justify-content: space-evenly;">
+        <div class="col-lg-3 col-md-6">
+            <div class="card mb-3 cardIssue cardStats">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">Admins</h5>
+                    <div class="circle">
+                        <div class="bar"></div>
+                        <div class="box"><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 ">
+            <div class="card mb-3 cardIssue pm cardStats">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">Project Managers</h5>
+                    <div class="circle text-center">
+                        <div class="bar"></div>
+                        <div class="box"><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card mb-3 cardIssue dev cardStats">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">Developers</h5>
+                    <div class="circle">
+                        <div class="bar"></div>
+                        <div class="box"><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card mb-3 cardIssue sub cardStats">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">Submitters</h5>
+                    <div class="circle">
+                        <div class="bar"></div>
+                        <div class="box"><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5" style="justify-content: space-evenly;">
+        <div class="col-lg-4 col-md-6">
+            <div class="card mb-3 cardIssue">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">ISSUE PRIORITY</h5>
+                    <canvas id="myChart" width="256" height="256">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card mb-3 cardIssue">
+                <div class="card-body text-center">
+                    <h5 class="card-title chartTitle">CURRENT STATS</h5>
+                    <canvas id="myChart3" width="256" height="256">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card mb-3 cardIssue">
+                <div class="card-body text-center">
+
+                    <h5 class="card-title chartTitle">ISSUE STATUS</h5>
+                    <canvas id="myChart2" width="256" height="256">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5">
+
+        <div class="col-lg-6">
+            <h2 class="mt-5 mb-5 text-center">ALL PROJECTS</h2>
+
+            <% let k=0 %> 
+            <table style="width:100%">
+                <tr style="background-color: #6494ed85;">
+                    <th>No.</th>
+                    <th class="text-center">Title</th>
+                </tr>
+
+                <% for(let project of projects) {%>
+                    <% if (k%2==0) { %>
+                        <tr>
+                            <td><%= k+1%> </td>
+                            <td class="text-center">
+                                <a href="/projects/<%=project._id%>">
+                                    <%= project.title %>
+                                </a>
+                            </td>
+                        </tr>
+
+                    <% }else{ %>
+                        <tr style="background-color: #6494ed25;">
+                            <td><%= k+1%> </td>
+                            <td class="text-center">
+                                <a href="/projects/<%=project._id%>">
+                                    <%= project.title %>
+                                </a>
+                            </td>
+                        </tr>
+
+                    <% } %> 
+                    <% k++ %> 
+                <% } %>
+
+            </table>
+        </div>
+
+        <div class="col-lg-6">
+            <h2 class="text-center mt-5 mb-5">ALL ISSUES</h2>
+
+            <% let c=0 %> 
+            <table style="width:100%">
+                <tr style="background-color: #6494ed85;">
+                    <th>No.</th>
+                    <th class="text-center">Title</th>
+                </tr>
+
+                <% for(let issue of issues) {%>
+                    <% if (c%2==0) { %>
+                        <tr>
+                            <td><%= c+1%> </td>
+                            <td>
+                                <a href="/issues/<%=issue._id%>">
+                                    <%= issue.title %>
+                                </a>
+                            </td>
+                        </tr>
+
+                    <% }else{ %>
+                        <tr style="background-color: #6494ed25;">
+                            <td><%= c+1%> </td>
+                            <td>
+                                <a href="/issues/<%=issue._id%>">
+                                    <%= issue.title %>
+                                </a>
+                            </td>
+                        </tr>
+
+                    <% } %> 
+                    <% c++ %> 
+                <% } %>
+
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        var totalStats = '<%- JSON.stringify(stats) %>';
+        var stats = JSON.parse(totalStats);
+        var userTypes = [stats["userA"], stats["userPM"], stats["userD"], stats["userS"]];
+
+        let options = {
+            startAngle: -1.55,
+            size: 150,
+            value: userTypes[0] / stats["userCount"],
+            fill: { gradient: ['#a6c1ee', '#fbc2eb'] }
+        }
+        $(".circle .bar").circleProgress(options).on('circle-animation-progress',
+            function (event, progress, stepValue) {
+                $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "%");
+            });
+        $(".pm .bar").circleProgress({
+            value: userTypes[1] / stats["userCount"],
+        });
+        $(".dev .bar").circleProgress({
+            value: userTypes[2] / stats["userCount"],
+        });
+        $(".sub .bar").circleProgress({
+            value: userTypes[3] / stats["userCount"],
+        });
+    </script>
+
+    <!-- CHARTJS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    <script>
+        var totalStats = '<%- JSON.stringify(stats) %>';
+        var stats = JSON.parse(totalStats);
+
+        var ctx = document.getElementById("myChart");
+        var priorityValues = [stats["priorityHigh"], stats["priorityMedium"], stats["priorityLow"]];
+        var priority = ["High", "Medium", "Low"];
+        var myChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: priority,
+                datasets: [
+                    {
+                        label: "Issue Priorities",
+                        data: priorityValues,
+                        backgroundColor: [
+                            "rgba(255, 99, 132, 0.2)",
+                            "rgba(255, 206, 86, 0.2)",
+                            "rgba(75, 192, 192, 0.2)",
+                        ],
+                        borderColor: [
+                            "rgba(255, 99, 132, 1)",
+                            "rgba(255, 206, 86, 1)",
+                            "rgba(75, 192, 192, 1)",
+                        ],
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+
+
+        var statusValues = [stats["statusUnassigned"], stats["statusAssigned"], stats["statusResolved"]]
+        var statuses = ["Unassigned", "Assigned", "Resolved"];
+        var ctx2 = document.getElementById("myChart2");
+        var myChart2 = new Chart(ctx2, {
+            type: "doughnut",
+            data: {
+                labels: statuses,
+                datasets: [
+                    {
+                        label: "Issue Status",
+                        data: statusValues,
+                        backgroundColor: [
+                            "rgba(255, 99, 132, 0.2)",
+                            "rgba(255, 206, 86, 0.2)",
+                            "rgba(75, 192, 192, 0.2)",
+                        ],
+                        borderColor: [
+                            "rgba(255, 99, 132, 1)",
+                            "rgba(255, 206, 86, 1)",
+                            "rgba(75, 192, 192, 1)",
+                        ],
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+
+
+        var ctx3 = document.getElementById("myChart3");
+        var counts = [stats["projectCount"], stats["issueCount"], stats["commentCount"], stats["userCount"]];
+        var countTypes = ["Projects", "Issues", "Comments", "Users"];
+        var myChart3 = new Chart(ctx3, {
+            type: "line",
+            data: {
+                labels: countTypes,
+                datasets: [
+                    {
+                        label: "Statistics",
+                        data: counts,
+                        backgroundColor: "rgba(153, 102, 255, 0.2)",
+                        borderColor: "rgba(153, 102, 255, 1)",
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+
+    </script>

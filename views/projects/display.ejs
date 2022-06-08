@@ -1,0 +1,56 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row ">
+        <div class="col-md-6 mt-5">
+            <div class="card mb-3 cardIssue">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= project.title%>
+                    </h5>
+                    <p class="card-text">
+                        <%= project.description%>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item cardItems"> Assigned To -
+                        <%= project.assigned_to.username%>
+                    </li>
+                    <li class="list-group-item cardItems"></li>
+                </ul>
+
+                <%  if(currentUser && currentUser.role!=="Submitter" && currentUser.role!=="Developer")  {%>
+                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-around;">
+                        <a class="card-link btn btn-readMore" href="/projects/<%=project._id%>/edit">Edit
+                            Project</a>
+                        <%  if(currentUser && currentUser.role==="Admin")  {%>
+                            <form class="d-inline" action="/projects/<%=project._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-readMore">Delete Project</button>
+                            </form>
+                        <% } %> 
+                    </div>
+                <% } %> 
+    
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-5">
+            <h2>LINKED ISSUES </h2>
+            <ul>
+                <%  if(project.related_issues && project.related_issues.length > 0)  {%>
+                    <% for (issue of project.related_issues) {%> 
+                        <div>
+                            <li class="issueLink">
+                                <a href="/issues/<%=issue._id%>">
+                                    <%= issue.title %>
+                                </a>
+                            </li>
+                        </div>
+                    <% } %> 
+                <% } %> 
+            </ul>
+
+        </div>
+
+    </div>
+
+    <a href="/projects">All Projects</a>

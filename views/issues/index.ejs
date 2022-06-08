@@ -1,0 +1,61 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <!-- <div class="col-6"></div> -->
+    <div class="col-6 offset-6">
+        <div class="dropdown">
+            <button class="btn btn-blue float-right m-3" type="button" data-toggle="dropdown">
+              Priority
+              <i class="fas fa-filter"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/issues">None</a>
+              <a class="dropdown-item" href="/issues?priorityFilter=High">High</a>
+              <a class="dropdown-item" href="/issues?priorityFilter=Medium">Medium</a>
+              <a class="dropdown-item" href="/issues?priorityFilter=Low">Low</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-blue float-right m-3" type="button" data-toggle="dropdown">
+              Status
+              <i class="fas fa-filter"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/issues">None</a>
+              <a class="dropdown-item" href="/issues?statusFilter=Unassigned">Unassigned</a>
+              <a class="dropdown-item" href="/issues?statusFilter=Assigned">Assigned</a>
+              <a class="dropdown-item" href="/issues?statusFilter=Resolved">Resolved</a>
+            </div>
+          </div>
+    </div>
+</div>
+
+
+<h1 class="heading"><%= filter  %> </h1>
+    <section id="gallery">
+        <div class="container">
+            <div class="row">
+                <% for(let issue of issues) {%>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card cardIssue">
+                            <% if (issue.images.length){ %> 
+                                <img src="<%=issue.images[0].url%>" alt="" class="card-img-top img-fluid">
+                            <% } else { %> 
+                                <img src="https://res.cloudinary.com/dwzhkdubz/image/upload/v1617216235/IssueTracker/default_venwpm.jpg" alt="" class="card-img-top img-fluid">
+                            <% } %> 
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= issue.title %>
+                                </h5>
+                                <p class="card-text shorten">
+                                    <%= issue.description %>
+                                </p>
+                                <a href="issues/<%=issue._id%>" class="btn btn-sm btn-readMore">Read
+                                    More</a>
+                                <!-- <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
