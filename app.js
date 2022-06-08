@@ -25,6 +25,7 @@ const Project = require('./models/project');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/issueTrackerTemp';
 const secret = process.env.SESSIONSECRET || 'insertasecret!';
+const port = process.env.PORT || 3000;
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -164,9 +165,8 @@ app.use((err, req, res, next) => {
 
 
 
-
-app.listen(3000, () => {
-    console.log('app is listening on port 3000!'.toUpperCase())
+app.listen(port, () => {
+    console.log('app is listening on port ${port}!'.toUpperCase())
 })
 
 
